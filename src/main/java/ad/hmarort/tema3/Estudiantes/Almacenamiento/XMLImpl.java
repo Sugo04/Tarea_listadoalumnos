@@ -11,8 +11,11 @@ import ad.hmarort.tema3.Estudiantes.Alumno;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 public class XMLImpl extends AlmacenamientoAlumnos implements Almacenamiento {
@@ -33,12 +36,13 @@ public class XMLImpl extends AlmacenamientoAlumnos implements Almacenamiento {
     public void guardarAlumnos(List<Alumno> lista, String archivo) {
         Path ruta = Path.of(archivo);
 
-        try (OutputStream out = Files.newOutputStream(ruta)) {
-            // Serializa la lista de alumnos a XML
-            xmlMapper.writeValue(out, lista);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error al guardar los alumnos en el archivo XML: " + archivo, e);
+        try (
+                OutputStream st1 = Files.newOutputStream(ruta);
+                OutputStreamWriter writer = new OutputStreamWriter(st1, StandardCharsets.UTF_8);) {
+                xmlMapper.writeValue(writer, lista);
+        } catch (IOException err) {
+            err.printStackTrace();
+            System.exit(1);
         }
     }
 
