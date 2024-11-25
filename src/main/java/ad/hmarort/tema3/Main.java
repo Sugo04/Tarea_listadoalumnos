@@ -1,34 +1,38 @@
 package ad.hmarort.tema3;
 
-import java.util.Scanner;
 import ad.hmarort.tema3.Interfaz.UI;
 import ad.hmarort.tema3.Interfaz.UIFactory;
-import ad.hmarort.tema3.Interfaz.UIFactory.TipoUI;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            UI ui = seleccionarModoUI();
+            // Crear la UI apropiada basada en los argumentos
+            UI ui = UIFactory.crearUI(args);
+            
+            // Ejecutar la UI con los argumentos recibidos
             ui.run(args);
+            
+        } catch (IllegalArgumentException e) {
+            System.err.println("Error: " + e.getMessage());
+            mostrarAyuda();
         } catch (Exception e) {
             System.err.println("Error inesperado: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    private static UI seleccionarModoUI() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Presione INTRO para modo automático o cualquier otra tecla + INTRO para modo manual");
-        
-        String input = scanner.nextLine();
-        
-        // Si solo presiona INTRO, la entrada estará vacía
-        if (input.trim().isEmpty()) {
-            System.out.println("Iniciando modo automático...");
-            return UIFactory.crearUI(TipoUI.AUTO);
-        } else {
-            System.out.println("Iniciando modo manual...");
-            return UIFactory.crearUI(TipoUI.MANUAL);
-        }
+    private static void mostrarAyuda() {
+        System.out.println("\nUso del programa:");
+        System.out.println("1. Modo Manual: ");
+        System.out.println("   Sin argumentos");
+        System.out.println("\n2. Modo Automático:");
+        System.out.println("   Argumentos: <formato> <nombreArchivo>");
+        System.out.println("\nDonde:");
+        System.out.println("   <formato>: ");
+        System.out.println("      1 - CSV");
+        System.out.println("      2 - JSON");
+        System.out.println("      3 - XML");
+        System.out.println("      4 - BIN");
+        System.out.println("   <nombreArchivo>: Nombre del archivo de salida (sin extensión)");
     }
 }

@@ -5,7 +5,7 @@ public class UIFactory {
      * Tipos de interfaz de usuario disponibles
      */
     public enum TipoUI {
-        AUTO,   // Para procesamiento automático con datos predefinidos
+        AUTO,   // Para procesamiento automático con args
         MANUAL  // Para ingreso manual de datos
     }
 
@@ -22,5 +22,16 @@ public class UIFactory {
             case MANUAL -> new UIManualImpl();
             default -> throw new IllegalArgumentException("Tipo de UI no válido: " + tipo);
         };
+    }
+
+    /**
+     * Determina automáticamente el tipo de UI basado en los argumentos
+     * Si hay argumentos, usa AUTO, si no hay argumentos, usa MANUAL
+     * 
+     * @param args Argumentos de línea de comandos
+     * @return Una instancia de UI apropiada
+     */
+    public static UI crearUI(String[] args) {
+        return crearUI(args != null && args.length > 0 ? TipoUI.AUTO : TipoUI.MANUAL);
     }
 }

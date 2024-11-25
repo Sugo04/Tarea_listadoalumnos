@@ -1,0 +1,43 @@
+{
+    "version": "2.0.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Manual",
+            "request": "launch",
+            "mainClass": "es.iescastillodeluna.ad.Main",
+            "projectName": "adt3ej03",
+            "args": [
+                "-u", "manual",
+                "-f", "${input:formatType}",
+                "-a", "estudiantes"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "Auto",
+            "request": "launch",
+            "mainClass": "es.iescastillodeluna.ad.Main",
+            "projectName": "adt3ej03",
+            "args": [
+                "-u", "automatic",
+                "-f", "${input:formatType}",
+                "-a", "estudiantes"
+            ]
+        }
+    ],
+    "inputs": [
+        {
+            "id": "formatType",
+            "type": "pickString",
+            "description": "Select the format type",
+            "options": [
+                "csv",
+                "json",
+                "xml",
+                "binario"
+            ],
+            "default": "xml"
+        }
+    ]
+}
