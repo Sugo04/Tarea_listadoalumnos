@@ -1,58 +1,57 @@
 package ad.hmarort.tema3.Estudiantes.Almacenamiento;
 
-import java.io.*;
-import java.util.List;
-
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamWriter;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 
 import ad.hmarort.tema3.Estudiantes.Alumno;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+
 public class XMLImpl extends AlmacenamientoAlumnos implements Almacenamiento {
+
+    private final ObjectMapper xmlMapper;
+
+    // Tipo genérico para listas de Alumno
+    private static final TypeReference<List<Alumno>> TIPO_LISTA_ALUMNO = new TypeReference<>() {};
+
+    public XMLImpl() {
+        // Configuración del XmlMapper
+        this.xmlMapper = new XmlMapper()
+                .configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true)
+                .enable(SerializationFeature.INDENT_OUTPUT); // Salida bonita
+    }
 
     @Override
     public void guardarAlumnos(List<Alumno> lista, String archivo) {
-        try {
-            XMLOutputFactory factory = XMLOutputFactory.newInstance();
-            XMLStreamWriter writer = factory.createXMLStreamWriter(new FileOutputStream(archivo), "UTF-8");
-            
-            writer.writeStartDocument("UTF-8", "1.0");
-            writer.writeStartElement("alumnos");
-            
-            for (Alumno alumno : lista) {
-                writer.writeStartElement("alumno");
-                
-                writer.writeStartElement("nombre");
-                writer.writeCharacters(alumno.getNombre());
-                writer.writeEndElement();
-                
-                writer.writeStartElement("apellidos");
-                writer.writeCharacters(alumno.getApellidos());
-                writer.writeEndElement();
-                
-                writer.writeStartElement("fechaNacimiento");
-                writer.writeCharacters(alumno.getFechaNacimiento().toString());
-                writer.writeEndElement();
-                
-                writer.writeStartElement("estudios");
-                writer.writeCharacters(alumno.getEstudiosPrevios().toString());
-                writer.writeEndElement();
-                
-                writer.writeEndElement(); // fin alumno
-            }
-            
-            writer.writeEndElement(); // fin alumnos
-            writer.writeEndDocument();
-            writer.close();
-            
-        } catch (Exception e) {
+        Path ruta = Path.of(archivo);
+
+        try (OutputStream out = Files.newOutputStream(ruta)) {
+            // Serializa la lista de alumnos a XML
+            xmlMapper.writeValue(out, lista);
+        } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException("Error al guardar los alumnos en el archivo XML: " + archivo, e);
         }
     }
 
     @Override
     public List<Alumno> cargarAlumnos(String archivo) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'cargarAlumnos'");
+        Path ruta = Path.of(archivo);
+
+        try (InputStream in = Files.newInputStream(ruta)) {
+            // Deserializa el XML en una lista de alumnos
+            return xmlMapper.readValue(in, TIPO_LISTA_ALUMNO);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al cargar los alumnos desde el archivo XML: " + archivo, e);
+        }
     }
 }

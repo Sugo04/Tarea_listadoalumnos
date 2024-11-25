@@ -9,22 +9,26 @@ import ad.hmarort.tema3.Estudiantes.DatosAlumno.Fecha;
 
 public class UIManualImpl implements UI {
     private List<Alumno> estudiantes;
+    private List<Alumno> estudiantesCargados;
     private Scanner scanner;
     private AlmacenamientoFactory almacenamientoFactory;
 
     public UIManualImpl() {
         this.estudiantes = new ArrayList<>();
+        this.estudiantesCargados = new ArrayList<>();
         this.scanner = new Scanner(System.in);
     }
 
     @Override
     public void run(String[] args) {
         try {
-            procesarDatos();
-            String formato = seleccionarFormato();
-            String nombreArchivo = solicitarNombreArchivo();
-            guardarDatos(formato, nombreArchivo);
-            mostrarResultados();
+            procesarDatos(); // Procesar datos introducidos por el usuario
+            String formato = seleccionarFormato(); // Seleccionar formato de archivo
+            String nombreArchivo = solicitarNombreArchivo(); // Nombre del archivo
+            guardarDatos(formato, nombreArchivo); // Guardar los datos en el archivo
+            cargarDatos(formato, nombreArchivo); // Cargar los datos desde el archivo
+            mostrarResultados(); // Mostrar los resultados
+            compararListas(); // Comparar las listas de estudiantes
         } finally {
             scanner.close();
         }
@@ -34,11 +38,11 @@ public class UIManualImpl implements UI {
     public void procesarDatos() {
         System.out.println("Ingrese la cantidad de alumnos a registrar:");
         int numAlumnos = leerNumero(scanner);
-        
+
         for (int i = 0; i < numAlumnos; i++) {
             System.out.println("\nIngresando datos del alumno " + (i + 1) + ":");
-            Alumno alumno = crearAlumno();
-            estudiantes.add(alumno);
+            Alumno alumno = crearAlumno(); // Crear un nuevo alumno con los datos ingresados
+            estudiantes.add(alumno); // Agregar el alumno a la lista de estudiantes
         }
     }
 
@@ -47,7 +51,7 @@ public class UIManualImpl implements UI {
         try {
             almacenamientoFactory = new AlmacenamientoFactory(formato);
             Almacenamiento almacenamiento = almacenamientoFactory.crearSalida();
-            almacenamiento.guardarAlumnos(estudiantes, nombreArchivo);
+            almacenamiento.guardarAlumnos(estudiantes, nombreArchivo); // Guardar en el archivo
             System.out.println("Datos guardados correctamente en " + nombreArchivo);
         } catch (Exception e) {
             System.out.println("Error al guardar los datos: " + e.getMessage());
@@ -107,12 +111,12 @@ public class UIManualImpl implements UI {
         System.out.println("2. JSON");
         System.out.println("3. XML");
         System.out.println("4. BINARIO");
-        
+
         int opcion = -1;
         while (opcion < 1 || opcion > 4) {
             opcion = leerNumero(scanner);
         }
-        
+
         switch (opcion) {
             case 1: return "CSV";
             case 2: return "JSON";
@@ -161,5 +165,26 @@ public class UIManualImpl implements UI {
             case 5 -> Estudios.UNIVERSIDAD;
             default -> throw new IllegalArgumentException("Opción inválida");
         };
+    }
+
+    // Método para comparar las listas de estudiantes
+    private void compararListas() {
+        if (estudiantes.equals(estudiantesCargados)) {
+            System.out.println("Las listas de alumnos son iguales.");
+        } else {
+            System.out.println("Las listas de alumnos NO son iguales.");
+        }
+    }
+
+    // Cargar los datos desde el archivo guardado
+    private void cargarDatos(String formato, String nombreArchivo) {
+        try {
+            almacenamientoFactory = new AlmacenamientoFactory(formato);
+            Almacenamiento almacenamiento = almacenamientoFactory.crearEntrada();
+            estudiantesCargados = almacenamiento.cargarAlumnos(nombreArchivo); // Cargar los alumnos desde el archivo
+            System.out.println("Datos cargados correctamente desde " + nombreArchivo);
+        } catch (Exception e) {
+            System.out.println("Error al cargar los datos: " + e.getMessage());
+        }
     }
 }

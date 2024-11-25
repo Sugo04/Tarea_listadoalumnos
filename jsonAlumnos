@@ -1,0 +1,9 @@
+[ {
+  "idMatricula" : "6c79264e3432f52524087446d85fa256",
+  "nombre" : "Hector",
+  "apellidos" : "Martin",
+  "fechaNacimiento" : {
+    "fecha" : [ 2004, 4, 22 ]
+  },
+  "estudiosPrevios" : "BACHILLERATO"
+} ]
