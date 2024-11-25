@@ -23,7 +23,13 @@ public class AlmacenamientoFactory {
         }
     }
 
+    // Método para crear la instancia de salida (guardar datos)
     public Almacenamiento crearSalida() {
+        return bd;
+    }
+
+    // Método para crear la instancia de entrada (cargar datos)
+    public Almacenamiento crearEntrada() {
         return bd;
     }
 }

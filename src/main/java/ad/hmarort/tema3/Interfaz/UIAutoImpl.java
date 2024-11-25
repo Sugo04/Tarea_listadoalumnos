@@ -9,11 +9,13 @@ import ad.hmarort.tema3.Estudiantes.DatosAlumno.Fecha;
 
 public class UIAutoImpl implements UI {
     private List<Alumno> estudiantes;
+    private List<Alumno> estudiantesCargados;
     private String[] args;
     private AlmacenamientoFactory almacenamientoFactory;
 
     public UIAutoImpl() {
         this.estudiantes = new ArrayList<>();
+        this.estudiantesCargados = new ArrayList<>();
     }
 
     @Override
@@ -25,8 +27,11 @@ public class UIAutoImpl implements UI {
         }
         
         procesarDatos();
-        guardarDatos(obtenerFormato(args[0]), args[1]);
+        String formato = obtenerFormato(args[0]);
+        guardarDatos(formato, args[1]);
+        cargarDatos(formato, args[1]);
         mostrarResultados();
+        compararListas();
     }
 
     @Override
@@ -69,5 +74,29 @@ public class UIAutoImpl implements UI {
             case "4" -> "BIN";
             default -> throw new IllegalArgumentException("Formato no válido: " + opcion);
         };
+    }
+
+    // Cargar los datos desde el archivo guardado
+    private void cargarDatos(String formato, String nombreArchivo) {
+        try {
+            almacenamientoFactory = new AlmacenamientoFactory(formato);
+            Almacenamiento almacenamiento = almacenamientoFactory.crearEntrada();
+            
+            // Añadir extensión según formato
+            String nombreCompleto = nombreArchivo + "." + formato.toLowerCase();
+            estudiantesCargados = almacenamiento.cargarAlumnos(nombreCompleto);
+            System.out.println("Datos cargados correctamente desde " + nombreCompleto);
+        } catch (Exception e) {
+            System.out.println("Error al cargar los datos: " + e.getMessage());
+        }
+    }
+
+    // Comparar las listas de estudiantes
+    private void compararListas() {
+        if (estudiantes.equals(estudiantesCargados)) {
+            System.out.println("Las listas de alumnos son iguales.");
+        } else {
+            System.out.println("Las listas de alumnos NO son iguales.");
+        }
     }
 }
