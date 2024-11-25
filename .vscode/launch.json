@@ -3,14 +3,24 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "ad.hmarort.tema3.Main",
+            "projectName": "listadoalumnos"
+        },
+        {
+            "type": "java",
             "name": "Manual",
             "request": "launch",
             "mainClass": "es.iescastillodeluna.ad.Main",
             "projectName": "adt3ej03",
             "args": [
-                "-u", "manual",
-                "-f", "${input:formatType}",
-                "-a", "estudiantes"
+                "-u",
+                "manual",
+                "-f",
+                "${input:formatType}",
+                "-a",
+                "estudiantes"
             ]
         },
         {
@@ -20,9 +30,12 @@
             "mainClass": "es.iescastillodeluna.ad.Main",
             "projectName": "adt3ej03",
             "args": [
-                "-u", "automatic",
-                "-f", "${input:formatType}",
-                "-a", "estudiantes"
+                "-u",
+                "automatic",
+                "-f",
+                "${input:formatType}",
+                "-a",
+                "estudiantes"
             ]
         }
     ],

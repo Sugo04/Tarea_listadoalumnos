@@ -2,10 +2,7 @@ package ad.hmarort.tema3.Estudiantes;
 
 import java.io.Serializable;
 import java.util.Objects;
-
-import ad.hmarort.tema3.Estudiantes.DatosAlumno.Estudios;
-import ad.hmarort.tema3.Estudiantes.DatosAlumno.Fecha;
-import ad.hmarort.tema3.Estudiantes.DatosAlumno.IDAlumno;
+import ad.hmarort.tema3.Estudiantes.DatosAlumno.*;
 
 public class Alumno implements Serializable {
     private String idMatricula;
