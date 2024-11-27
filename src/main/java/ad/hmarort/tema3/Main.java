@@ -6,10 +6,8 @@ import ad.hmarort.tema3.Interfaz.UIFactory;
 public class Main {
     public static void main(String[] args) {
         try {
-            // Crear la UI apropiada basada en los argumentos
             UI ui = UIFactory.crearUI(args);
             
-            // Ejecutar la UI con los argumentos recibidos
             ui.run(args);
             
         } catch (IllegalArgumentException e) {
