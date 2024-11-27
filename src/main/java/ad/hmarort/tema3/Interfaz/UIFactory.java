@@ -14,7 +14,6 @@ public class UIFactory {
      * 
      * @param tipo El tipo de UI a crear (AUTO o MANUAL)
      * @return Una instancia de UI del tipo especificado
-     * @throws IllegalArgumentException si el tipo no es válido
      */
     public static UI crearUI(TipoUI tipo) {
         return switch (tipo) {
