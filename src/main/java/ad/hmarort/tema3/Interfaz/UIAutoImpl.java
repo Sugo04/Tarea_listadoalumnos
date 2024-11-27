@@ -7,6 +7,9 @@ import ad.hmarort.tema3.Estudiantes.Almacenamiento.Almacenamiento;
 import ad.hmarort.tema3.Estudiantes.DatosAlumno.Estudios;
 import ad.hmarort.tema3.Estudiantes.DatosAlumno.Fecha;
 
+/**
+ * UI Automática
+ */
 public class UIAutoImpl implements UI {
     private List<Alumno> estudiantes;
     private List<Alumno> estudiantesCargados;
@@ -17,7 +20,10 @@ public class UIAutoImpl implements UI {
         this.estudiantes = new ArrayList<>();
         this.estudiantesCargados = new ArrayList<>();
     }
-
+    
+    /**
+     * Función principal
+     */
     @Override
     public void run(String[] args) {
         this.args = args;
@@ -34,6 +40,9 @@ public class UIAutoImpl implements UI {
         compararListas();
     }
 
+    /**
+     * Función con los datos ya recopilados
+     */
     @Override
     public void procesarDatos() {
         // Datos de ejemplo predefinidos
@@ -44,6 +53,9 @@ public class UIAutoImpl implements UI {
         ));
     }
 
+    /**
+     * Función que permite guardar los datos según el formato seleccionado
+     */
     @Override
     public void guardarDatos(String formato, String nombreArchivo) {
         try {
@@ -60,12 +72,20 @@ public class UIAutoImpl implements UI {
         }
     }
 
+    /**
+     * Función para mostrar los resultados
+     */
     @Override
     public void mostrarResultados() {
         System.out.println("\nResumen de alumnos guardados:");
         estudiantes.forEach(System.out::println);
     }
 
+    /**
+     * Función para obtener el formato seleccionado
+     * @param opcion
+     * @return
+     */
     private String obtenerFormato(String opcion) {
         return switch (opcion) {
             case "csv" -> "CSV";
@@ -76,7 +96,11 @@ public class UIAutoImpl implements UI {
         };
     }
 
-    // Cargar los datos desde el archivo guardado
+    /**
+     * Cargar datos desde el archivo seleccionado
+     * @param formato
+     * @param nombreArchivo
+     */
     private void cargarDatos(String formato, String nombreArchivo) {
         try {
             almacenamientoFactory = new AlmacenamientoFactory(formato);
@@ -91,7 +115,9 @@ public class UIAutoImpl implements UI {
         }
     }
 
-    // Comparar las listas de estudiantes
+    /**
+     * Comparador de listas de estudiantes
+     */
     private void compararListas() {
         if (estudiantes.equals(estudiantesCargados)) {
             System.out.println("Las listas de alumnos son iguales.");

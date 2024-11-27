@@ -1,8 +1,14 @@
 package ad.hmarort.tema3.Estudiantes.Almacenamiento;
-
+/**
+ * Factory de los lamacenamientos
+ */
 public class AlmacenamientoFactory {
     private Almacenamiento bd;
-
+    /**
+     * Seleccionamos el formato con el que vamos a devolver nuestra informacion
+     * @param formato
+     * @throws IllegalArgumentException
+     */
     public AlmacenamientoFactory(String formato) throws IllegalArgumentException {
         switch (formato.toUpperCase()) {
             case "CSV":
@@ -23,12 +29,17 @@ public class AlmacenamientoFactory {
         }
     }
 
-    // Método para crear la instancia de salida (guardar datos)
+    /** 
+     * Método para crear la instancia de salida (guardar datos)
+     * 
+     */ 
     public Almacenamiento crearSalida() {
         return bd;
     }
 
-    // Método para crear la instancia de entrada (cargar datos)
+    /**
+     * Método para crear la instancia de entrada (cargar datos)
+     */
     public Almacenamiento crearEntrada() {
         return bd;
     }

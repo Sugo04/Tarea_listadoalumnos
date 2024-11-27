@@ -17,7 +17,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
+/**
+ * Clase que devuelve la lista en un xml
+ */
 public class XMLImpl extends AlmacenamientoAlumnos implements Almacenamiento {
 
     private final ObjectMapper xmlMapper;

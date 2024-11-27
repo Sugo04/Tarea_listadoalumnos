@@ -2,7 +2,9 @@ package ad.hmarort.tema3.Estudiantes.Almacenamiento;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Clase de almacenamiento de alumnos abstracta
+ */
 import ad.hmarort.tema3.Estudiantes.Alumno;
 
 public abstract class AlmacenamientoAlumnos {
