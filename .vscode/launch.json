@@ -15,12 +15,8 @@
             "mainClass": "es.iescastillodeluna.ad.Main",
             "projectName": "adt3ej03",
             "args": [
-                "-u",
-                "automatic",
-                "-f",
                 "${input:formatType}",
-                "-a",
-                "estudiantes"
+                "${input:fileName}"
             ]
         }
     ],
@@ -36,6 +32,11 @@
                 "binario"
             ],
             "default": "xml"
+        },
+        {
+            "id": "fileName",
+            "type": "promptString",
+            "description": "Enter the file name (without extension)"
         }
     ]
 }

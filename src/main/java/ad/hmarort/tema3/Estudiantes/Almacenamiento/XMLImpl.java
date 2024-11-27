@@ -16,19 +16,22 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class XMLImpl extends AlmacenamientoAlumnos implements Almacenamiento {
 
     private final ObjectMapper xmlMapper;
 
     // Tipo genérico para listas de Alumno
-    private static final TypeReference<List<Alumno>> TIPO_LISTA_ALUMNO = new TypeReference<>() {};
+    private static final TypeReference<List<Alumno>> TIPO_LISTA_ALUMNO = new TypeReference<>() {
+    };
 
     public XMLImpl() {
-        // Configuración del XmlMapper
         this.xmlMapper = new XmlMapper()
                 .configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true)
-                .enable(SerializationFeature.INDENT_OUTPUT); // Salida bonita
+                .enable(SerializationFeature.INDENT_OUTPUT)
+                .registerModule(new JavaTimeModule())
+                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); // Serializar fechas como cadenas
     }
 
     @Override
@@ -38,7 +41,7 @@ public class XMLImpl extends AlmacenamientoAlumnos implements Almacenamiento {
         try (
                 OutputStream st1 = Files.newOutputStream(ruta);
                 OutputStreamWriter writer = new OutputStreamWriter(st1, StandardCharsets.UTF_8);) {
-                xmlMapper.writeValue(writer, lista);
+            xmlMapper.writeValue(writer, lista);
         } catch (IOException err) {
             err.printStackTrace();
             System.exit(1);
