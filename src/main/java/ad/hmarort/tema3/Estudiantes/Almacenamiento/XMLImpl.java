@@ -39,13 +39,10 @@ public class XMLImpl extends AlmacenamientoAlumnos implements Almacenamiento {
         Path ruta = Path.of(archivo);
 
         try (
-                OutputStream st1 = Files.newOutputStream(ruta);
-                OutputStreamWriter writer = new OutputStreamWriter(st1, StandardCharsets.UTF_8);
-            ) {
-                ((XmlMapper)xmlMapper).writer()
-                    .withRootName("Alumnos")
-                    .writeValue(writer, lista);
-                    
+            OutputStream st1 = Files.newOutputStream(ruta);
+            OutputStreamWriter writer = new OutputStreamWriter(st1, StandardCharsets.UTF_8);
+        ) {
+            xmlMapper.writer().withRootName("listado").writeValue(writer, lista);
         } catch (IOException err) {
             err.printStackTrace();
             System.exit(1);
