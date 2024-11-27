@@ -12,8 +12,8 @@
             "type": "java",
             "name": "Auto",
             "request": "launch",
-            "mainClass": "es.iescastillodeluna.ad.Main",
-            "projectName": "adt3ej03",
+            "mainClass": "ad.hmarort.tema3.Main",
+            "projectName": "listadoalumnos",
             "args": [
                 "${input:formatType}",
                 "${input:fileName}"
