@@ -4,14 +4,16 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 import ad.hmarort.tema3.Estudiantes.DatosAlumno.*;
 
+@JacksonXmlRootElement(localName = "alumno")
 public class Alumno implements Serializable {
     private String idMatricula;
     private String nombre;
     private String apellidos;
-    
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Fecha fechaNacimiento;
     private Estudios estudiosPrevios;

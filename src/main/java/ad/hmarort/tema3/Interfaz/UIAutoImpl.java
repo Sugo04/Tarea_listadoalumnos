@@ -68,10 +68,10 @@ public class UIAutoImpl implements UI {
 
     private String obtenerFormato(String opcion) {
         return switch (opcion) {
-            case "1" -> "CSV";
-            case "2" -> "JSON";
-            case "3" -> "XML";
-            case "4" -> "BIN";
+            case "csv" -> "CSV";
+            case "json" -> "JSON";
+            case "xml" -> "XML";
+            case "binario" -> "BIN";
             default -> throw new IllegalArgumentException("Formato no válido: " + opcion);
         };
     }

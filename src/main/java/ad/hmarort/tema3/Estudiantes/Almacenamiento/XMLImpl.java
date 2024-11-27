@@ -22,7 +22,7 @@ public class XMLImpl extends AlmacenamientoAlumnos implements Almacenamiento {
 
     private final ObjectMapper xmlMapper;
 
-    // Tipo genérico para listas de Alumno
+    
     private static final TypeReference<List<Alumno>> TIPO_LISTA_ALUMNO = new TypeReference<>() {
     };
 
@@ -40,8 +40,12 @@ public class XMLImpl extends AlmacenamientoAlumnos implements Almacenamiento {
 
         try (
                 OutputStream st1 = Files.newOutputStream(ruta);
-                OutputStreamWriter writer = new OutputStreamWriter(st1, StandardCharsets.UTF_8);) {
-            xmlMapper.writeValue(writer, lista);
+                OutputStreamWriter writer = new OutputStreamWriter(st1, StandardCharsets.UTF_8);
+            ) {
+                ((XmlMapper)xmlMapper).writer()
+                    .withRootName("Alumnos")
+                    .writeValue(writer, lista);
+                    
         } catch (IOException err) {
             err.printStackTrace();
             System.exit(1);
